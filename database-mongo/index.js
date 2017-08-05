@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect('mongodb://localhost/todolist');
 
 var db = mongoose.connection;
 
@@ -12,14 +12,19 @@ db.once('open', function() {
 });
 
 var itemSchema = mongoose.Schema({
-  quantity: Number,
-  description: String
+  username: String,
+  description: String,
+  crossed: Boolean,
+  deleted: Boolean,
+  dateCreated: Date,
+  dateCrossed: Date,
+  dateDeleted: Date, 
 });
 
-var Item = mongoose.model('Item', itemSchema);
+var Todo = mongoose.model('Todo', itemSchema);
 
-var selectAll = function(callback) {
-  Item.find({}, function(err, items) {
+var read = function(callback) {
+  Todo.find({}, function(err, items) {
     if(err) {
       callback(err, null);
     } else {
@@ -28,4 +33,33 @@ var selectAll = function(callback) {
   });
 };
 
-module.exports.selectAll = selectAll;
+var write = function(todo, callback) {
+  var row = new Todo(todo);
+  row.save(function (err, row) {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, row);
+    }
+  });
+};
+
+var crossed = function(todo, callback) {
+  var query = {'description':todo.description, 'username':todo.username};
+  var newData = {$set:{'crossed':todo.crossed, 'dateCrossed': todo.dateCrossed}};
+  Todo.findOneAndUpdate(query, newData, function(err, row){
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, row);
+    }
+  });
+};
+
+module.exports.read = read;
+module.exports.write = write;
+module.exports.crossed = crossed;
+
+
+
+

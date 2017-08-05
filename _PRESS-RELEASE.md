@@ -17,28 +17,28 @@ Once the project moves into development, the press release can be used as a touc
  -->
  
 ## Heading ##
-  > Name the product in a way the reader (i.e. your target customers) will understand.
+  > Todolist
 
 ## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+  > Everybody want to track their todos!  
 
 ## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+  > You will not forget anything thanks to Todolist.
 
 ## Problem ##
-  > Describe the problem your product solves.
+  > This product solve short term memory loss. Again: "You will not forget anything thanks to Todolist".
 
 ## Solution ##
-  > Describe how your product elegantly solves the problem.
+  > The interface is so beautiful, you will be crying of joy.
 
 ## Quote from You ##
-  > A quote from a spokesperson in your company.
+  > Todolist is basically making the world better.
 
 ## How to Get Started ##
-  > Describe how easy it is to get started.
+  > It is easy to use.
 
 ## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+  > Guillaume: "Thanks to Todolist I don't forget yogurt anymore when I go to Costco or other any store. And also banana."
 
 ## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
+  > Please find a way to use it.
