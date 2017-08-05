@@ -1,0 +1,209 @@
+
+$text: #fff;
+$font: "Open Sans";
+$size: 16px;
+
+$btn: #5FBDA8; /* cyan*/
+$base: #1E3354; /* blue*/
+/* $bg_list: #52424A // violet*/
+
+$bg_none: rgba(255, 255, 255, 0);
+$shadow: rgba(0, 0, 0, .3);
+$input_box: #32343c;
+
+$check_box: darken($text, 20%);
+$padding_check: 30px;
+$size_check: 15px;
+$size_checked: $size_check;
+
+// mixin
+
+@mixin hover {
+  -webkit-box-shadow: 0 70px 70px -35px $shadow;
+  -moz-box-shadow: 0 70px 70px -35px $shadow;
+  box-shadow: 0 70px 70px -35px $shadow;
+  -webkit-transition: all.4s ease-in;
+  -o-transition: all.4s ease-in;
+  -moz-transition: all.4s ease-in;
+  transition: all.4s ease-in;
+}
+
+@mixin gradient($from-color, $to-color) {
+  background-color: mix($from-color, $to-color); /* Fallback */
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from($from-color), to($to-color));
+  background-image: -webkit-linear-gradient(top, $from-color, $to-color); 
+  background-image: -moz-linear-gradient(top, $from-color, $to-color);
+  background-image: -o-linear-gradient(top, $from-color, $to-color);
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='$from-color', EndColorStr='$to-color')";
+}
+
+@mixin box-sizing {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+@mixin transition($transition) {
+  -webkit-transition: $transition;
+  -moz-transition: $transition;
+  -o-transition: $transition;
+  transition: $transition;
+}
+
+@mixin transform($transform) {
+  -webkit-transform: $transform;
+  -moz-transform: $transform;
+  -o-transform: $transform;
+  -ms-transform: $transform;
+  transform: $transform;
+}
+
+@mixin box-shadow($box-shadow) {
+  -webkit-box-shadow: $box-shadow;
+  -moz-box-shadow: $box-shadow;
+  box-shadow: $box-shadow;
+}
+
+@mixin optional-at-root($sel) {
+  @at-root #{if(not &, $sel, selector-append(&, $sel))} {
+    @content;
+  }
+}
+
+@mixin placeholder {
+  @include optional-at-root("::-webkit-input-placeholder") {
+    @content;
+  }
+
+  @include optional-at-root(":-moz-placeholder") {
+    @content;
+  }
+
+  @include optional-at-root("::-moz-placeholder") {
+    @content;
+  }
+
+  @include optional-at-root(":-ms-input-placeholder") {
+    @content;
+  }
+}
+
+// end mixin
+
+* {
+  @include box-sizing;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  font-family: $font, sans-serif;
+  font-size: $size;
+  overflow-x: hidden;
+  @include gradient($btn, $base);
+}
+
+#app {
+  position: relative;
+  width: 800px;
+  padding: 50px 40px;
+  margin: auto;
+  margin-top: 55px;
+  color: $text;
+  background: $bg_none;
+  @include box-shadow(0 10px 30px $shadow);
+  @include transform(translate3d(0, -5px, 0));
+  @include transition(all.4s ease-out);
+
+  &:hover {
+    @include hover;
+    @include transform(translate3d(0, 5px, 0));
+  }
+}
+
+h1 {
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+h4 {
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+td, th{
+  text-align: left;
+  padding-left: 30px;
+
+  .btn{
+    width: 10px;
+  }
+}
+
+button, .description {
+  cursor: pointer
+}
+
+#add {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+input {
+  padding: 5px 8px;
+  outline: none;
+  width: 80%;
+  text-transform: uppercase;
+  background: $bg_none;
+  border: none;
+  border-bottom: 2px solid $shadow;
+
+  @include placeholder {
+    color: $input_box;;
+  }
+}
+
+#addbtn {
+  width: 15%;
+  padding: 5px 2px;
+  outline: none;
+  text-align: center;
+  background: $bg_none;
+  color: $input_box;
+  border: none;
+  @include box-shadow(0 1px 3px 1px $shadow);
+  @include transition(all.4s ease-out);
+
+  &:hover {
+    @include hover;
+  }
+}
+
+/*<div class="forAddItems">
+  <input type="text" 
+autocomplete="off" 
+placeholder="What else to add?" 
+v-model="tasks.name" 
+@keyup.enter="newItem" 
+class="make">
+
+  <input type="submit" 
+value="Add" 
+class="btn btn_add" 
+@click="newItem">
+</div>*/
+
+
+
+
+
+
+
+
+
+
+

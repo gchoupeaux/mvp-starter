@@ -12,31 +12,36 @@ class App extends React.Component {
     }
   }
 
-  add (description) {
+  add (description, e) {
 
-    var todo = {username: 'Gui',
-                description: description, 
-                crossed: false,
-                deleted: false,
-                dateCreated: new Date(),
-                dateCrossed: null,
-                dateDeleted: null};
-    
-    var app = this;
-    var datas = this.state.todos;
+    // can't add an allready existing todo
+    if (!this.state.todos.some(todo => todo.description === description)){
+      var todo = {username: 'Gui',
+                  description: description, 
+                  crossed: false,
+                  deleted: false,
+                  dateCreated: new Date().toString(),
+                  dateCrossed: '                        ',
+                  dateDeleted: '                        '};
+      
+      var app = this;
+      var datas = this.state.todos;
 
-    datas.push(todo);
+      datas.push(todo);
 
-    $.post('/todo', todo, 
-      function(data){
-      app.setState({
-        todos: datas
+      $.post('/todo', todo, 
+        function(data){
+        app.setState({
+          todos: datas
+        });
+        console.log('posted: ', data);
+      })
+      .fail(function() {
+        console.log('NOT posted');
       });
-      console.log('posted: ', data);
-    })
-    .fail(function() {
-      console.log('NOT posted');
-    });
+    } else {
+      alert('This todo allready exists.')
+    }
   }
 
   crossed (todo, index) {
@@ -46,9 +51,9 @@ class App extends React.Component {
 
     datas[index].crossed = !todo.crossed;
     if (todo.crossed){
-      datas[index].dateCrossed = new Date();
+      datas[index].dateCrossed = new Date().toString();
     } else {
-      datas[index].dateCrossed = null;
+      datas[index].dateCrossed = '                        ';
     }
 
     $.post('/todo/crossed', datas[index], 
@@ -64,23 +69,29 @@ class App extends React.Component {
   }
 
   deleted (todo, index) {
-    
-    var app = this;
-    var datas = this.state.todos;
 
-    datas[index].deleted = true;
-    datas[index].dateDeleted = new Date();
+    // can't delete if not crossed
+    if (todo.crossed){
+      var app = this;
+      var datas = this.state.todos;
 
-    $.post('/todo/deleted', datas[index], 
-      function(data){
-      app.setState({
-        todos: datas
+      //datas[index].deleted = true;
+      //datas[index].dateDeleted = new Date().toString();
+
+      $.post('/todo/deleted', datas[index], 
+        function(data){
+        datas.splice(index,1);
+        app.setState({
+          todos: datas
+        });
+        console.log('posted: ', data);
+      })
+      .fail(function() {
+        console.log('NOT posted');
       });
-      console.log('posted: ', data);
-    })
-    .fail(function() {
-      console.log('NOT posted');
-    });
+    } else {
+      alert('Must be crossed before deletion.')
+    }
   }
 
   componentWillMount() {   
@@ -115,8 +126,9 @@ class App extends React.Component {
   render () {
     return (<div>
       <h1>To Do List</h1>
-      <List todos={this.state.todos} crossed={this.crossed.bind(this)} deleted={this.deleted.bind(this)}/>
+      <h4>Hi Gui! You have { this.state.todos.length } todos.</h4>
       <Add add={this.add.bind(this)}/>
+      <List todos={this.state.todos} crossed={this.crossed.bind(this)} deleted={this.deleted.bind(this)}/>
     </div>)
   }
 }

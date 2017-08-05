@@ -1,1 +1,6 @@
 node_modules
+.sass-cache/
+react-client/dist/style.css
+react-client/dist/style.css.map
+react-client/dist/bundle.js
+

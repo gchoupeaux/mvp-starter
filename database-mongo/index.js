@@ -16,14 +16,15 @@ var itemSchema = mongoose.Schema({
   description: String,
   crossed: Boolean,
   deleted: Boolean,
-  dateCreated: Date,
-  dateCrossed: Date,
-  dateDeleted: Date, 
+  dateCreated: String,//Date,
+  dateCrossed: String,//Date,
+  dateDeleted: String,//Date, 
 });
 
 var Todo = mongoose.model('Todo', itemSchema);
 
 var read = function(callback) {
+  // IT I WANT TO RETURN ONLY not deleted 'deleted':false
   Todo.find({}, function(err, items) {
     if(err) {
       callback(err, null);
@@ -57,15 +58,27 @@ var crossed = function(todo, callback) {
 };
 
 var deleted = function(todo, callback) {
+
+  // IT I WANT TO KEEP THE DELETED TODO IN DB
+  // var query = {'description':todo.description, 'username':todo.username};
+  // var newData = {$set:{'deleted':todo.deleted, 'dateDeleted': todo.dateDeleted}};
+  // Todo.findOneAndUpdate(query, newData, function(err, row){
+  //   if (err) {
+  //     callback(err, null);
+  //   } else {
+  //     callback(null, row);
+  //   }
+  // });
+
   var query = {'description':todo.description, 'username':todo.username};
-  var newData = {$set:{'deleted':todo.deleted, 'dateDeleted': todo.dateDeleted}};
-  Todo.findOneAndUpdate(query, newData, function(err, row){
+  Todo.remove(query, function(err, row){
     if (err) {
       callback(err, null);
     } else {
       callback(null, row);
     }
   });
+
 };
 
 module.exports.read = read;
