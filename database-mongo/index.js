@@ -56,9 +56,22 @@ var crossed = function(todo, callback) {
   });
 };
 
+var deleted = function(todo, callback) {
+  var query = {'description':todo.description, 'username':todo.username};
+  var newData = {$set:{'deleted':todo.deleted, 'dateDeleted': todo.dateDeleted}};
+  Todo.findOneAndUpdate(query, newData, function(err, row){
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, row);
+    }
+  });
+};
+
 module.exports.read = read;
 module.exports.write = write;
 module.exports.crossed = crossed;
+module.exports.deleted = deleted;
 
 
 

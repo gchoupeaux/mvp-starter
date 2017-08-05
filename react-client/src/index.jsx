@@ -13,6 +13,7 @@ class App extends React.Component {
   }
 
   add (description) {
+
     var todo = {username: 'Gui',
                 description: description, 
                 crossed: false,
@@ -20,9 +21,17 @@ class App extends React.Component {
                 dateCreated: new Date(),
                 dateCrossed: null,
                 dateDeleted: null};
+    
+    var app = this;
+    var datas = this.state.todos;
+
+    datas.push(todo);
 
     $.post('/todo', todo, 
       function(data){
+      app.setState({
+        todos: datas
+      });
       console.log('posted: ', data);
     })
     .fail(function() {
@@ -43,6 +52,26 @@ class App extends React.Component {
     }
 
     $.post('/todo/crossed', datas[index], 
+      function(data){
+      app.setState({
+        todos: datas
+      });
+      console.log('posted: ', data);
+    })
+    .fail(function() {
+      console.log('NOT posted');
+    });
+  }
+
+  deleted (todo, index) {
+    
+    var app = this;
+    var datas = this.state.todos;
+
+    datas[index].deleted = true;
+    datas[index].dateDeleted = new Date();
+
+    $.post('/todo/deleted', datas[index], 
       function(data){
       app.setState({
         todos: datas
@@ -86,7 +115,7 @@ class App extends React.Component {
   render () {
     return (<div>
       <h1>To Do List</h1>
-      <List todos={this.state.todos} crossed={this.crossed.bind(this)}/>
+      <List todos={this.state.todos} crossed={this.crossed.bind(this)} deleted={this.deleted.bind(this)}/>
       <Add add={this.add.bind(this)}/>
     </div>)
   }

@@ -43,6 +43,17 @@ app.post('/todo/crossed', urlencodedParser, function (req, res) {
   })
 });
 
+app.post('/todo/deleted', urlencodedParser, function (req, res) {
+  if (!req.body) return res.sendStatus(400);
+  console.log('POST deleted received: ', req.body.description);
+
+  db.deleted(req.body, function(err, row){
+    if (err) console.log(err);
+    //console.log('Row crossed: ', row.description);
+    res.status(200).send(req.body.description);
+  })
+});
+
 app.get('/todo', urlencodedParser, function (req, res) {
   if (!req.body) return res.sendStatus(400);
   console.log('GET received');
