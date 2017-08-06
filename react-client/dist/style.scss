@@ -153,11 +153,11 @@ button, .description {
   margin-bottom: 40px;
 }
 
-input {
+input[type="text"]{
+  font-size: 30px;
   padding: 5px 8px;
   outline: none;
   width: 80%;
-  text-transform: uppercase;
   background: $bg_none;
   border: none;
   border-bottom: 2px solid $shadow;
@@ -168,7 +168,8 @@ input {
 }
 
 #addbtn {
-  width: 15%;
+  width: 10%;
+  font-size: 30px;
   padding: 5px 2px;
   outline: none;
   text-align: center;
@@ -182,6 +183,43 @@ input {
     @include hover;
   }
 }
+
+/*input[type=checkbox] {
+      display:none;
+      content: "sfdghjh";
+      position: absolute;
+      left: -$padding_check - 2px;
+      width: $size_checked;
+      height: $size_checked;
+      background: $check_box;
+}*/
+
+label {
+  position: relative;
+  /*display: inline-block;*/
+  top: 0;
+  left: 60px;
+  cursor: pointer;
+
+  &:after {
+    content: "";
+    position:absolute;
+    top:3px;
+    left: -$padding_check;
+    display:block;
+    height: $size_check;
+    width: $size_check;
+    border: 1px solid $check_box;
+    background: $bg_none;
+    cursor: pointer;
+    outline: none;
+  }
+}
+
+.clickbtn {
+  display: none;
+}
+
 
 /*<div class="forAddItems">
   <input type="text" 

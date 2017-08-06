@@ -4,7 +4,9 @@ import $ from 'jquery';
 const ListItem = (props) => (
   <tr style={{display: props.todo.deleted ? 'none':''}}>
     <td className = {'btn'}>
-      <button onClick={() => {props.deleted(props.todo, props.index)}}>x</button>
+      <label>
+      <button className = {'clickbtn'}onClick={() => {props.deleted(props.todo, props.index)}}>x</button>
+      </label>
     </td>
     <td>{ props.todo.dateCreated.slice(0,25) }</td>
     <td>{ props.todo.dateCrossed.slice(0,25) }</td>
@@ -17,7 +19,7 @@ const ListItem = (props) => (
 
 export default ListItem; 
 
-
+//
 
 // <div>
 //   <span style={{textDecoration: props.todo.crossed ? 'line-through':'none', 
